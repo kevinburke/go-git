@@ -13,9 +13,10 @@ func TestCurrentBranch(t *testing.T) {
 }
 
 func TestRoot(t *testing.T) {
-	result, err := Root()
-	fmt.Println(err)
-	fmt.Println(result)
+	_, err := Root("")
+	if err != nil {
+		t.Fatal(err.Error())
+	}
 }
 
 var remoteTests = []struct {

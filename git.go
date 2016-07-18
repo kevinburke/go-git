@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os/exec"
+	"path/filepath"
 	"regexp"
 	"strconv"
 	"strings"
@@ -150,9 +151,12 @@ func Tip(branch string) (string, error) {
 }
 
 // Root returns the root directory of the current Git repository, or an error
-// if you are not in a git repository.
-func Root() (string, error) {
-	result, err := exec.Command("git", "rev-parse", "--show-toplevel").CombinedOutput()
+// if you are not in a git repository. If directory is not the empty string,
+// change the working directory before running the command.
+func Root(directory string) (string, error) {
+	cmd := exec.Command("git", "rev-parse", "--show-toplevel")
+	cmd.Dir = filepath.Dir(directory)
+	result, err := cmd.CombinedOutput()
 	trimmed := strings.TrimSpace(string(result))
 	if err != nil {
 		return "", errors.New(trimmed)
