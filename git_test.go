@@ -1,8 +1,9 @@
 package git
 
 import (
-	"reflect"
 	"testing"
+
+	"github.com/google/go-cmp/cmp"
 )
 
 func TestCurrentBranch(t *testing.T) {
@@ -37,6 +38,16 @@ var remoteTests = []struct {
 			RepoName: "shyp_api",
 			Format:   SSHFormat,
 			URL:      "git@github.com:Shyp/shyp_api.git",
+			SSHUser:  "git",
+		},
+	}, {
+		"git@github.com:Shyp/shyp_api", RemoteURL{
+			Host:     "github.com",
+			Port:     22,
+			Path:     "Shyp",
+			RepoName: "shyp_api",
+			Format:   SSHFormat,
+			URL:      "git@github.com:Shyp/shyp_api",
 			SSHUser:  "git",
 		},
 	}, {
@@ -121,8 +132,8 @@ func TestParseRemoteURL(t *testing.T) {
 		if remote == nil {
 			t.Fatalf("expected ParseRemoteURL(%s) to be %v, was nil", tt.remote, tt.expected)
 		}
-		if !reflect.DeepEqual(*remote, tt.expected) {
-			t.Errorf("expected ParseRemoteURL(%s) to be %#v, was %#v", tt.remote, tt.expected, remote)
+		if diff := cmp.Diff(*remote, tt.expected); diff != "" {
+			t.Errorf("ParseRemoteURL(%q): (-got +want)\n%s", tt.remote, diff)
 		}
 	}
 }
