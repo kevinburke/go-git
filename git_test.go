@@ -16,9 +16,6 @@ func TestCurrentBranch(t *testing.T) {
 
 func TestRoot(t *testing.T) {
 	result, err := Root("")
-	if err != nil {
-		t.Fatal(err.Error())
-	}
 	// TODO figure out a way to test this as well - it depends on your current
 	// working directory, and you can run "go test" from anywhere on the
 	// filesystem.

@@ -22,10 +22,10 @@ const (
 
 // Short ssh style doesn't allow a custom port
 // http://stackoverflow.com/a/5738592/329700
-var sshExp = regexp.MustCompile("^(?P<sshUser>[^@]+)@(?P<domain>[^:]+):(?P<pathRepo>.*)(\\.git/?)?$")
+var sshExp = regexp.MustCompile(`^(?P<sshUser>[^@]+)@(?P<domain>[^:]+):(?P<pathRepo>.*)(\.git/?)?$`)
 
 // https://github.com/Shyp/shyp_api.git
-var httpsExp = regexp.MustCompile("^https://(?P<domain>[^/:]+)(:(?P<port>[[0-9]+))?/(?P<pathRepo>.+?)(\\.git/?)?$")
+var httpsExp = regexp.MustCompile(`^https://(?P<domain>[^/:]+)(:(?P<port>[[0-9]+))?/(?P<pathRepo>.+?)(\.git/?)?$`)
 
 // A remote URL. Easiest to describe with an example:
 //

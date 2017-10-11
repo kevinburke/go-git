@@ -18,7 +18,7 @@ endif
 	chmod 755 $(MEGACHECK)
 
 lint: $(MEGACHECK)
-	go list ./... | grep -v vendor | xargs $(MEGACHECK) --ignore='gitlab.tyto.com/cloud-eng/ads/cmd/adsadmin/*.go:U1000'
+	go list ./... | grep -v vendor | xargs $(MEGACHECK) --ignore='github.com/kevinburke/go-git/*.go:U1000'
 	go list ./... | grep -v vendor | xargs go vet
 
 $(GODOCDOC):
@@ -27,7 +27,7 @@ $(GODOCDOC):
 docs: $(GODOCDOC)
 	$(GODOCDOC)
 
-test: vet
+test: lint
 	@# this target should always be listed first so "make" runs the tests.
 	bazel test --test_output=errors //...
 
