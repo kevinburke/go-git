@@ -11,6 +11,8 @@ import (
 	"strings"
 )
 
+const version = "0.4"
+
 type GitFormat int
 
 const (
