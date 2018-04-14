@@ -5,6 +5,9 @@ language: go
 os: linux
 dist: trusty
 
+before_script:
+  - go get -u -t ./...
+
 script:
   - make race-test
 
