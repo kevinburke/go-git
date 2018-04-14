@@ -5,6 +5,9 @@ language: go
 os: linux
 dist: trusty
 
+script:
+  - make race-test
+
 cache:
   directories:
     - $GOPATH/pkg
