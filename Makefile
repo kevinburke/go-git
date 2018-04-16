@@ -34,3 +34,6 @@ test: lint
 
 race-test: lint
 	go test -race ./...
+
+release: | $(BUMP_VERSION)
+	$(BUMP_VERSION) minor git.go
