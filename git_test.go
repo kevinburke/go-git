@@ -1,26 +1,35 @@
 package git
 
 import (
+	"fmt"
+	"path/filepath"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
 )
 
 func TestCurrentBranch(t *testing.T) {
+	t.Skip("CI checks out a specific commit, not on a branch")
 	result, err := CurrentBranch()
 	// TODO find a way to test this that does not rely on the current state of
 	// the git repository.
-	_ = err
-	_ = result
+	if err != nil {
+		t.Fatal(err)
+	}
+	if result != "go-git" {
+		t.Errorf("wrong branch name, got %s", result)
+	}
 }
 
 func TestRoot(t *testing.T) {
 	result, err := Root("")
-	// TODO figure out a way to test this as well - it depends on your current
-	// working directory, and you can run "go test" from anywhere on the
-	// filesystem.
-	_ = err
-	_ = result
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, end := filepath.Split(result)
+	if end != "go-git" {
+		t.Errorf("wrong directory path: %s", end)
+	}
 }
 
 var remoteTests = []struct {
@@ -133,4 +142,22 @@ func TestParseRemoteURL(t *testing.T) {
 			t.Errorf("ParseRemoteURL(%q): (-got +want)\n%s", tt.remote, diff)
 		}
 	}
+}
+
+func TestGetRemoteURL(t *testing.T) {
+	r, err := GetRemoteURL("origin")
+	if err != nil {
+		t.Fatal(err)
+	}
+	fmt.Println(r.RepoName)
+}
+
+func TestTip(t *testing.T) {
+	s, err := Tip("")
+	fmt.Println("s", s)
+	fmt.Println("err", err)
+	s, err = Tip("master")
+	fmt.Println("s", s)
+	fmt.Println("err", err)
+	//t.Fail()
 }
