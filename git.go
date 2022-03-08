@@ -150,6 +150,22 @@ func Tip(branch string) (string, error) {
 	if branch == "" {
 		branch = "HEAD"
 	}
+	result, err := exec.Command("git", "rev-parse", branch).CombinedOutput()
+	if err != nil {
+		if strings.Contains(string(result), "Needed a single revision") {
+			return "", fmt.Errorf("git: Branch %s is unknown, can't get tip", branch)
+		}
+		return "", err
+	}
+	return strings.TrimSpace(string(result)), nil
+}
+
+// Tip returns a short (usually 6 to 8 byte) SHA of the given Git branch. If
+// branch is empty, defaults to HEAD on the current branch.
+func ShortTip(branch string) (string, error) {
+	if branch == "" {
+		branch = "HEAD"
+	}
 	result, err := exec.Command("git", "rev-parse", "--short", branch).CombinedOutput()
 	if err != nil {
 		if strings.Contains(string(result), "Needed a single revision") {
