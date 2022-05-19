@@ -28,94 +28,104 @@ var remoteTests = []struct {
 	expected RemoteURL
 }{
 	{
-		"git@github.com:Shyp/shyp_api.git", RemoteURL{
+		"git@github.com:Kevinburke/shyp_api.git", RemoteURL{
 			Host:     "github.com",
 			Port:     22,
-			Path:     "Shyp",
+			Path:     "Kevinburke",
 			RepoName: "shyp_api",
 			Format:   SSHFormat,
-			URL:      "git@github.com:Shyp/shyp_api.git",
+			URL:      "git@github.com:Kevinburke/shyp_api.git",
 			SSHUser:  "git",
 		},
 	}, {
-		"git@github.com:Shyp/shyp_api", RemoteURL{
+		"git@github.com:Kevinburke/shyp_api", RemoteURL{
 			Host:     "github.com",
 			Port:     22,
-			Path:     "Shyp",
+			Path:     "Kevinburke",
 			RepoName: "shyp_api",
 			Format:   SSHFormat,
-			URL:      "git@github.com:Shyp/shyp_api",
+			URL:      "git@github.com:Kevinburke/shyp_api",
 			SSHUser:  "git",
 		},
 	}, {
-		"git@github.com:Shyp/shyp_api.git/", RemoteURL{
-			Path:     "Shyp",
-			Host:     "github.com",
-			Port:     22,
-			RepoName: "shyp_api",
-			Format:   SSHFormat,
-			URL:      "git@github.com:Shyp/shyp_api.git/",
-			SSHUser:  "git",
-		},
-	}, {
-		"git@github.com:path/to/Shyp/shyp_api.git/", RemoteURL{
-			Path:     "path/to/Shyp",
+		"git@github.com:Kevinburke/shyp_api.git/", RemoteURL{
+			Path:     "Kevinburke",
 			Host:     "github.com",
 			Port:     22,
 			RepoName: "shyp_api",
 			Format:   SSHFormat,
-			URL:      "git@github.com:path/to/Shyp/shyp_api.git/",
+			URL:      "git@github.com:Kevinburke/shyp_api.git/",
 			SSHUser:  "git",
 		},
 	}, {
-		"https://github.com/Shyp/shyp_api.git", RemoteURL{
-			Path:     "Shyp",
+		"git@github.com:path/to/Kevinburke/shyp_api.git/", RemoteURL{
+			Path:     "path/to/Kevinburke",
+			Host:     "github.com",
+			Port:     22,
+			RepoName: "shyp_api",
+			Format:   SSHFormat,
+			URL:      "git@github.com:path/to/Kevinburke/shyp_api.git/",
+			SSHUser:  "git",
+		},
+	}, {
+		"https://github.com/Kevinburke/shyp_api.git", RemoteURL{
+			Path:     "Kevinburke",
 			Host:     "github.com",
 			Port:     443,
 			RepoName: "shyp_api",
 			Format:   HTTPSFormat,
-			URL:      "https://github.com/Shyp/shyp_api.git",
+			URL:      "https://github.com/Kevinburke/shyp_api.git",
 			SSHUser:  "",
 		},
 	}, {
-		"https://github.com/Shyp/shyp_api.git/", RemoteURL{
-			Path:     "Shyp",
+		"https://github.com/Kevinburke/shyp_api.git/", RemoteURL{
+			Path:     "Kevinburke",
 			Host:     "github.com",
 			Port:     443,
 			RepoName: "shyp_api",
 			Format:   HTTPSFormat,
-			URL:      "https://github.com/Shyp/shyp_api.git/",
+			URL:      "https://github.com/Kevinburke/shyp_api.git/",
 			SSHUser:  "",
 		},
 	}, {
-		"https://github.com:11443/Shyp/shyp_api.git", RemoteURL{
-			Path:     "Shyp",
+		"https://github.com:11443/Kevinburke/shyp_api.git", RemoteURL{
+			Path:     "Kevinburke",
 			Host:     "github.com",
 			Port:     11443,
 			RepoName: "shyp_api",
 			Format:   HTTPSFormat,
-			URL:      "https://github.com:11443/Shyp/shyp_api.git",
+			URL:      "https://github.com:11443/Kevinburke/shyp_api.git",
 			SSHUser:  "",
 		},
 	}, {
-		"https://github.com/Shyp/shyp_api", RemoteURL{
-			Path:     "Shyp",
+		"https://github.com/Kevinburke/shyp_api", RemoteURL{
+			Path:     "Kevinburke",
 			Host:     "github.com",
 			Port:     443,
 			RepoName: "shyp_api",
 			Format:   HTTPSFormat,
-			URL:      "https://github.com/Shyp/shyp_api",
+			URL:      "https://github.com/Kevinburke/shyp_api",
 			SSHUser:  "",
 		},
 	}, {
-		"https://github.com/Shyp/repo.name.with.periods.git", RemoteURL{
-			Path:     "Shyp",
+		"https://github.com/Kevinburke/repo.name.with.periods.git", RemoteURL{
+			Path:     "Kevinburke",
 			Host:     "github.com",
 			Port:     443,
 			RepoName: "repo.name.with.periods",
 			Format:   HTTPSFormat,
-			URL:      "https://github.com/Shyp/repo.name.with.periods.git",
+			URL:      "https://github.com/Kevinburke/repo.name.with.periods.git",
 			SSHUser:  "",
+		},
+	}, {
+		"ssh://git@github.com/Kevinburke/sshrepo.git", RemoteURL{
+			Path:     "Kevinburke",
+			Host:     "github.com",
+			Port:     22,
+			RepoName: "sshrepo",
+			Format:   SSHFormat,
+			URL:      "ssh://git@github.com/Kevinburke/sshrepo.git",
+			SSHUser:  "git",
 		},
 	},
 }
