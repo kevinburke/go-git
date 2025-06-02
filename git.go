@@ -170,16 +170,11 @@ func GetRemoteURL(remoteName string) (*RemoteURL, error) {
 // CurrentBranch returns the name of the current Git branch. Returns an error
 // if you are not on a branch, or if you are not in a git repository.
 func CurrentBranch() (string, error) {
-	out, err := exec.Command("git", "rev-parse", "--abbrev-ref", "HEAD").Output()
+	result, err := exec.Command("git", "symbolic-ref", "--short", "HEAD").Output()
 	if err != nil {
-		// not a git repo, git missing, etc.
 		return "", err
 	}
-	branch := strings.TrimSpace(string(out))
-	if branch == "HEAD" {
-		return "", errors.New("not on a branch (detached HEAD)")
-	}
-	return branch, nil
+	return strings.TrimSpace(string(result)), nil
 }
 
 // Tip returns the SHA of the given Git branch. If the empty string is
