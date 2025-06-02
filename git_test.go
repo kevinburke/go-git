@@ -24,6 +24,12 @@ func TestRoot(t *testing.T) {
 	_ = result
 }
 
+func TestVersion(t *testing.T) {
+	if len(version) < 1 {
+		t.Errorf("git version is empty, expected a non-empty string")
+	}
+}
+
 var remoteTests = []struct {
 	remote   string
 	expected RemoteURL
