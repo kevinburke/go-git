@@ -1,6 +1,7 @@
 package git
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"log"
@@ -169,12 +170,19 @@ func GetRemoteURL(remoteName string) (*RemoteURL, error) {
 
 // CurrentBranch returns the name of the current Git branch. Returns an error
 // if you are not on a branch, or if you are not in a git repository.
-func CurrentBranch() (string, error) {
-	result, err := exec.Command("git", "symbolic-ref", "--short", "HEAD").Output()
+func CurrentBranch(ctx context.Context) (string, error) {
+	result, err := exec.CommandContext(ctx, "git", "symbolic-ref", "--short", "HEAD").Output()
 	if err != nil {
 		return "", err
 	}
-	return strings.TrimSpace(string(result)), nil
+
+	// Strip any prefix (heads/, remotes/origin/, tags/, etc.)
+	branch := strings.TrimSpace(string(result))
+	if idx := strings.LastIndex(branch, "/"); idx != -1 {
+		branch = branch[idx+1:]
+	}
+
+	return branch, nil
 }
 
 // Tip returns the SHA of the given Git branch. If the empty string is

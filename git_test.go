@@ -1,13 +1,14 @@
 package git
 
 import (
+	"context"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
 )
 
 func TestCurrentBranch(t *testing.T) {
-	result, err := CurrentBranch()
+	result, err := CurrentBranch(context.Background())
 	// TODO find a way to test this that does not rely on the current state of
 	// the git repository.
 	_ = err
