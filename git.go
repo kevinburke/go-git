@@ -13,7 +13,7 @@ import (
 	"strings"
 )
 
-const version = "0.11"
+const version = "0.11.1"
 
 type GitFormat int
 
