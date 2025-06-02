@@ -9,7 +9,7 @@ jobs:
     # Run the matrix of Go versions that Travis used
     strategy:
       matrix:
-        go-version: [1.23.x, 1.24.x, latest]
+        go-version: [1.23.x, 1.24.x]
 
     steps:
       - name: Checkout source
