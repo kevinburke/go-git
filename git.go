@@ -175,14 +175,7 @@ func CurrentBranch(ctx context.Context) (string, error) {
 	if err != nil {
 		return "", err
 	}
-
-	// Strip any prefix (heads/, remotes/origin/, tags/, etc.)
-	branch := strings.TrimSpace(string(result))
-	if idx := strings.LastIndex(branch, "/"); idx != -1 {
-		branch = branch[idx+1:]
-	}
-
-	return branch, nil
+	return strings.TrimSpace(string(result)), nil
 }
 
 // Tip returns the SHA of the given Git branch. If the empty string is

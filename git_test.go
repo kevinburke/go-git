@@ -2,6 +2,8 @@ package git
 
 import (
 	"context"
+	"os"
+	"os/exec"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
@@ -13,6 +15,43 @@ func TestCurrentBranch(t *testing.T) {
 	// the git repository.
 	_ = err
 	_ = result
+}
+
+func TestCurrentBranchSlash(t *testing.T) {
+	dir := t.TempDir()
+	cmd := exec.Command("git", "init")
+	cmd.Dir = dir
+	if out, err := cmd.CombinedOutput(); err != nil {
+		t.Fatalf("git init: %v\n%s", err, out)
+	}
+	cmd = exec.Command("git", "commit", "--allow-empty", "-m", "init")
+	cmd.Dir = dir
+	if out, err := cmd.CombinedOutput(); err != nil {
+		t.Fatalf("git commit: %v\n%s", err, out)
+	}
+	cmd = exec.Command("git", "checkout", "-b", "feature/my-fix")
+	cmd.Dir = dir
+	if out, err := cmd.CombinedOutput(); err != nil {
+		t.Fatalf("git checkout: %v\n%s", err, out)
+	}
+
+	// CurrentBranch reads from the cwd, so we need to chdir
+	orig, err := os.Getwd()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Chdir(dir); err != nil {
+		t.Fatal(err)
+	}
+	t.Cleanup(func() { os.Chdir(orig) })
+
+	branch, err := CurrentBranch(context.Background())
+	if err != nil {
+		t.Fatal(err)
+	}
+	if branch != "feature/my-fix" {
+		t.Errorf("CurrentBranch: got %q, want %q", branch, "feature/my-fix")
+	}
 }
 
 func TestRoot(t *testing.T) {
